@@ -32,11 +32,9 @@ const detailCommand: discordeno.CreateSlashApplicationCommand = {
   ],
 };
 await bot.helpers.createGuildApplicationCommand(listCommand, Secret.GUILD_ID);
-await bot.helpers.upsertGuildApplicationCommands(Secret.GUILD_ID, [
-  listCommand,
-]);
 await bot.helpers.createGuildApplicationCommand(detailCommand, Secret.GUILD_ID);
 await bot.helpers.upsertGuildApplicationCommands(Secret.GUILD_ID, [
+  listCommand,
   detailCommand,
 ]);
 
@@ -54,7 +52,7 @@ bot.events.interactionCreate = async (b, interaction) => {
       b.helpers.sendInteractionResponse(interaction.id, interaction.token, {
         type: discordeno.InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          content: "```" + JSON.stringify(Members) + "```",
+          content: "```" + memberText + "```",
         },
       });
       break;
@@ -90,6 +88,14 @@ const getMemberData = async (
     };
   }
   return undefined;
+};
+
+const memberText = (): string => {
+  const result = [];
+  for (const key of Object.keys(Members)) {
+    result.push(`背番号：${key}、${Members[key]}`);
+  }
+  return result.join("\n");
 };
 
 const fileToBlob = async (path: string): Promise<Blob> => {
