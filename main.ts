@@ -90,10 +90,10 @@ const getMemberData = async (
   return undefined;
 };
 
-const memberText = (): string => {
+const memberText = () => {
   const result = [];
   for (const key of Object.keys(Members)) {
-    result.push(`背番号：${key}、${Members[key]}`);
+    result.push(`背番号：${key}、${Members[key].name}`);
   }
   return result.join("\n");
 };
