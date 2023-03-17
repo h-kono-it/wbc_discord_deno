@@ -52,7 +52,7 @@ bot.events.interactionCreate = async (b, interaction) => {
       b.helpers.sendInteractionResponse(interaction.id, interaction.token, {
         type: discordeno.InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          content: "```" + memberText + "```",
+          content: "```" + memberText() + "```",
         },
       });
       break;
