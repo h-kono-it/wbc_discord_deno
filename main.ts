@@ -48,7 +48,7 @@ bot.events.messageCreate = (b, message) => {
   }
 };
 
-bot.events.interactionCreate = (b, interaction) => {
+bot.events.interactionCreate = async (b, interaction) => {
   switch (interaction.data?.name) {
     case "list": {
       b.helpers.sendInteractionResponse(interaction.id, interaction.token, {
@@ -62,7 +62,7 @@ bot.events.interactionCreate = (b, interaction) => {
     case "detail": {
       b.helpers.sendInteractionResponse(interaction.id, interaction.token, {
         type: discordeno.InteractionResponseTypes.ChannelMessageWithSource,
-        data: getMemberData(
+        data: await getMemberData(
           (
             interaction.data.options?.find((option) => option.name === "number")
               ?.value || ""
@@ -77,23 +77,23 @@ bot.events.interactionCreate = (b, interaction) => {
   }
 };
 
-const getMemberData = (
+const getMemberData = async (
   num: string
-): discordeno.InteractionCallbackData | undefined => {
+): Promise<discordeno.InteractionCallbackData | undefined> => {
   const member = Members[num];
   if (member) {
     return {
       content: member.name,
       file: member.imageName
-        ? { blob: fileToBlob(member.imageName), name: member.imageName }
+        ? { blob: await fileToBlob(member.imageName), name: member.imageName }
         : undefined,
     };
   }
   return undefined;
 };
 
-const fileToBlob = (path: string): Blob => {
-  return new Blob([Deno.readFileSync(`./images/${path}`).buffer]);
+const fileToBlob = async (path: string): Promise<Blob> => {
+  return new Blob([(await Deno.readFile(`./images/${path}`)).buffer]);
 };
 
 await discordeno.startBot(bot);
