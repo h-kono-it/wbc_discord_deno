@@ -1,6 +1,6 @@
 import { discordeno } from "./deps.ts";
 import { Secret } from "./secret.ts";
-import { Members } from "./members.ts";
+import { Members, PleyerResult } from "./members.ts";
 
 const bot = discordeno.createBot({
   token: Secret.DISCORD_TOKEN,
@@ -81,7 +81,7 @@ const getMemberData = async (
   const member = Members[num];
   if (member) {
     return {
-      content: member.name,
+      content: detailContentText(member),
       file: member.imageName
         ? { blob: await fileToBlob(member.imageName), name: member.imageName }
         : undefined,
@@ -96,6 +96,29 @@ const memberText = () => {
     result.push(`背番号：${key}、${Members[key].name}`);
   }
   return result.join("\n");
+};
+
+const detailContentText = (member: {
+  name: string;
+  imageName: string;
+  season: PleyerResult;
+}): string => {
+  const result = [];
+  result.push(`${member.name}(2022年度:${member.season.joined})`);
+  result.push("```" + resultToText(member.season) + "```");
+  return result.join("\n");
+};
+
+const resultToText = (result: PleyerResult): string => {
+  if (result.isPitcher) {
+    return `防 ${result.era.toFixed(2)} ${result.win}勝 ${result.lose}敗 ${
+      result.holdPoint
+    }HP ${result.save}S`;
+  } else {
+    return `率 ${result.ba.toFixed(3).toString().split(".")[1]} ${
+      result.homerun
+    }本 ${result.rbi}打点 ${result.steal}盗塁`;
+  }
 };
 
 const fileToBlob = async (path: string): Promise<Blob> => {
