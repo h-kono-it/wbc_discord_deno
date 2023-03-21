@@ -30,4 +30,5 @@ export const Members: { [P in string]: { name: string; imageName: string } } = {
   "34": { name: "吉田正尚", imageName: "" },
   "51": { name: "鈴木誠也", imageName: "34.png" },
   "63": { name: "山崎颯一郎", imageName: "63.png" },
+  "5": { name: "牧原大成", imageName: "5.png" },
 };
