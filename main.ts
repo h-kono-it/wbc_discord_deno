@@ -115,7 +115,7 @@ const resultToText = (result: PleyerResult): string => {
       result.holdPoint
     }HP ${result.save}S`;
   } else {
-    return `率 ${result.ba.toFixed(3).toString().split(".")[1]} ${
+    return `率 .${result.ba.toFixed(3).toString().split(".")[1]} ${
       result.homerun
     }本 ${result.rbi}打点 ${result.steal}盗塁`;
   }
