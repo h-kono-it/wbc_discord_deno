@@ -16,7 +16,7 @@ const bot = discordeno.createBot({
 });
 
 const listCommand: discordeno.CreateSlashApplicationCommand = {
-  name: "list",
+  name: "member_list",
   description: "代表メンバーを返します",
   options: [],
 };
@@ -49,7 +49,7 @@ bot.events.messageCreate = (b, message) => {
 
 bot.events.interactionCreate = async (b, interaction) => {
   switch (interaction.data?.name) {
-    case "list": {
+    case "member_list": {
       b.helpers.sendInteractionResponse(interaction.id, interaction.token, {
         type: discordeno.InteractionResponseTypes.ChannelMessageWithSource,
         data: {
