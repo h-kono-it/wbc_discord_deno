@@ -16,7 +16,7 @@ const bot = discordeno.createBot({
 });
 
 const listCommand: discordeno.CreateSlashApplicationCommand = {
-  name: "list",
+  name: "member_list",
   description: "代表メンバーを返します",
   options: [],
 };
