@@ -32,12 +32,12 @@ const detailCommand: discordeno.CreateSlashApplicationCommand = {
     },
   ],
 };
-// await bot.helpers.createGuildApplicationCommand(listCommand, Secret.GUILD_ID);
+await bot.helpers.createGuildApplicationCommand(listCommand, Secret.GUILD_ID);
 // await bot.helpers.createGuildApplicationCommand(detailCommand, Secret.GUILD_ID);
-await bot.helpers.upsertGuildApplicationCommands(Secret.GUILD_ID, [
-  listCommand,
-  detailCommand,
-]);
+// await bot.helpers.upsertGuildApplicationCommands(Secret.GUILD_ID, [
+//   listCommand,
+//   detailCommand,
+// ]);
 
 bot.events.messageCreate = (b, message) => {
   if (message.content === "!neko") {
